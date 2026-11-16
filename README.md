@@ -1,52 +1,58 @@
-# 自动点击
+# 自动点击 · Auto Click
 
-简单的 macOS 区域自动点击工具。原生 SwiftUI 设置页面，支持中文与英文、跟随系统或手动切换深浅主题，并记住你的选择。
+**English** | [简体中文](README.zh-CN.md)
 
-## 安装
+A native macOS auto clicker. Select a screen region, choose a click interval and a run duration, and let the app handle repeated left clicks.
+
+## Install
 
 ```sh
 brew install --cask etanxing/tap/regionclick
 ```
 
-Apple Silicon Mac，macOS 13 或更新版本。当前版本使用临时签名，尚未通过 Apple 公证。首次启动若被拦截，请在「系统设置 → 隐私与安全性」中查看并手动允许。
+Requires an **Apple Silicon Mac running macOS 13 or later**. The installed app is named **自动点击.app**, including when using the English interface.
 
-## 使用
-
-1. 打开「自动点击」，在设置页面打开系统辅助功能设置，允许自动点击。
-2. 点击「框选区域」，在任意一台显示器上拖动选择矩形，按 Esc 取消。
-3. 选择点击区域中心，或在区域内随机点击。使用鼠标左键单击。
-4. 设置点击间隔和运行时长（单位均为秒），点击开始。
-5. 窗口会隐藏，3 秒后开始点击；倒计时不计入运行时长。到时自动停止。
-
-**随时按 Command + Shift + 句号（⌘⇧.）停止**。也可从菜单栏打开窗口后停止。关闭窗口仍可从菜单栏重新打开；退出应用会停止点击。运行时鼠标将移到点击位置。
-
-点击间隔范围为 0.05–3600 秒，运行时长范围为 1–86400 秒。运行时长基于单调时钟，包括电脑睡眠经过的时间；唤醒后若已超时会直接停止，不补发点击。显示器布局发生变化会停止运行并清除已保存区域。
-
-首次授予权限后若系统仍未识别，请退出后重新打开自动点击。
-
-## 发布方式
-
-与轻词一致：源码保存在私有仓库，公开仓库仅包含安装包、说明、版本记录及问题反馈。
-
-- 私有源码：https://github.com/etanxing/regionclick
-- 公开下载：https://github.com/etanxing/regionclick-releases
-- Homebrew Tap：https://github.com/etanxing/homebrew-tap
+To update an existing installation:
 
 ```sh
-bash scripts/test.sh
-bash scripts/build.sh
-bash scripts/package.sh
-REGIONCLICK_TAP_DIR=/path/to/homebrew-tap bash scripts/release.sh
+brew update
+brew upgrade --cask etanxing/tap/regionclick
 ```
 
-发布脚本要求源码和 Tap 工作区已提交，创建公开 Release、上传 ZIP 和 SHA256 校验文件，随后更新 Tap。安装包不包含源码。编译只需 Xcode Command Line Tools。
+You can also download the ZIP from [Releases](https://github.com/etanxing/regionclick-releases/releases/latest), extract it, and move 自动点击.app to Applications. Each release includes a SHA256 checksum file.
 
-## English
+## First launch
 
-A native macOS auto clicker. Select a region on any display, click its center or a random point inside it, and set an interval and a run duration in seconds. Starts after a three-second countdown and stops automatically. Press **Command + Shift + period** to stop globally. Grant Accessibility access in Settings before use. English and Simplified Chinese, light and dark themes, and saved preferences are included.
+```sh
+open "/Applications/自动点击.app"
+```
 
-Requires Apple Silicon and macOS 13+. The app is ad-hoc signed and not notarized; macOS may require manual first-launch approval in Privacy & Security.
+The app is ad-hoc signed and has not been notarized by Apple. If macOS blocks the first launch, check **System Settings → Privacy & Security** and manually allow it.
 
-## Validation
+In the app's **Settings** tab, click **Open System Settings**, then allow **自动点击** under **Privacy & Security → Accessibility**. If the permission is not recognized immediately, quit and reopen the app.
 
-Core tests cover coordinate conversion including negative display coordinates, random point bounds, invalid numeric settings, deadline behavior, and translation key coverage. UI snapshots are rendered in Chinese/English and light/dark. Posting clicks to other applications and the physical multi-display selection flow require a live Accessibility-authorized session; they are not covered by the automated core tests.
+## Use
+
+1. Click **Select region…** and drag a rectangle on any display. Press Escape to cancel.
+2. Choose **Region center** or **Random in region**. The app sends single left clicks.
+3. Set the **click interval** and **run duration**, both in seconds.
+4. Click **Start**. The window hides and clicking begins after a three-second countdown.
+5. Clicking stops automatically when the run duration ends. The countdown is separate from the run duration.
+
+**Press Command + Shift + period (⌘⇧.) at any time to stop.** You can also reopen the window from the menu bar and click Stop. Closing the window keeps the app available in the menu bar; quitting stops clicking. While running, the pointer moves to each click position.
+
+The interval range is **0.05–3600 seconds**, and the duration range is **1–86400 seconds**. Sleep time counts toward the duration. If the timer has expired when the Mac wakes, the app stops without sending catch-up clicks. Changes to the display layout stop the run and clear the saved region.
+
+## Language and appearance
+
+- Choose **English**, **简体中文**, or the system language using the visible language switch.
+- In **Settings**, choose **Light**, **Dark**, or **System** appearance.
+- The app remembers your choices, click settings, and selected region.
+
+## Downloads and support
+
+- [Latest release](https://github.com/etanxing/regionclick-releases/releases/latest)
+- [Report an issue](https://github.com/etanxing/regionclick-releases/issues)
+- [Homebrew Tap](https://github.com/etanxing/homebrew-tap)
+
+This public repository contains downloads, documentation, release notes, and issue reports. The application source is maintained privately.
